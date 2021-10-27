@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.octest.beans.Auteur;
+import com.octest.forms.ConnectionForm;
 
 /**
  * Servlet implementation class Test
@@ -25,18 +26,25 @@ public class Test extends HttpServlet {
 	 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Auteur auteur = new Auteur();
+		/*Auteur auteur = new Auteur();
 		auteur.setNom("obiang");
 		auteur.setPrenom("Xavier");
 		auteur.setActif(true);
-		request.setAttribute("auteur", auteur);
+		request.setAttribute("auteur", auteur);*/
+		
+		String[] titres = {"Nouvel incendie", "le monde à l'envers", "bienvenu au cameroun"};
+		request.setAttribute("titres", titres);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
 	}
  
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		ConnectionForm form = new ConnectionForm();
+		
+		form.verifierIdentifiant(request);
+		request.setAttribute("form", form);
+		
+		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
 	}
 
 }
